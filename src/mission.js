@@ -1,9 +1,11 @@
 var config = {
-  type: Phaser.CANVAS,
-  width: 800,
-  height: 512,
+  type: Phaser.AUTO,
+  width: 400,
+  height: 400,
   backgroundColor: "ffffff",
+
   fps: 60,
+  resolution: 4,
   physics: {
     default: "arcade",
     arcade: {
@@ -28,12 +30,21 @@ function preload() {
     frameWidth: 104,
     frameHeight: 104,
   });
+
+
+
+  this.load.tilemapTiledJSON('map', 'res/map.json');
+  this.load.image('tiles', 'res/tileset.png');
+
 }
 
 function create() {
 
   textObj = this.add.text(10, 10, '', { font: '32px Courier', fill: '#ff0000' });
 
+  var map = this.make.tilemap({ key: 'map' });
+  var tileset = map.addTilesetImage('tileset', 'tiles');
+  var layer = map.createLayer('mission', tileset, 0, 0);
 
   this.anims.create({
     key: "right",
